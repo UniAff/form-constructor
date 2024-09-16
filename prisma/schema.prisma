@@ -27,15 +27,11 @@ model Form {
   offerId   Int
   offer     Offer    @relation(fields: [offerId], references: [id])
   name      String
-  photo     String
-  geoId     Int
-  geo       Geo      @relation(fields: [geoId], references: [id])
-  currency  String
-  price     Int
-  discount  Int
   template  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Geo       Geo?     @relation(fields: [geoId], references: [id])
+  geoId     Int?
 }
 
 model Geo {

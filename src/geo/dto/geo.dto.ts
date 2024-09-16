@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateGeoDto {
@@ -26,12 +26,12 @@ export class CreateGeoDto {
 export class UpdateGeoDto {
   @ApiProperty({ description: 'Code of the Geo entity', required: false })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   code?: string;
 
   @ApiProperty({ description: 'Name of the Geo entity', required: false })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   name?: string;
 
   @ApiProperty({
@@ -39,7 +39,7 @@ export class UpdateGeoDto {
     required: false,
   })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   currency?: string;
 
   @ApiProperty({
@@ -47,7 +47,7 @@ export class UpdateGeoDto {
     required: false,
   })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   language?: string;
 }
 

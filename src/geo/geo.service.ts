@@ -14,12 +14,7 @@ export class GeoService {
     return this.prisma.geo.findUnique({ where: { id } });
   }
 
-  async create(data: {
-    code: string;
-    name: string;
-    currency: string;
-    language: string;
-  }): Promise<Geo> {
+  async create(data: { code: string; name: string; currency: string; language: string }): Promise<Geo> {
     const { code, name, currency, language } = data;
 
     return this.prisma.geo.create({

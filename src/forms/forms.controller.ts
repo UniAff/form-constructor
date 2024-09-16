@@ -6,6 +6,7 @@ import {
   Param,
   Put,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { FormService } from './forms.service';
 import { CreateFormDto, UpdateFormDto, FormEntity } from './dto/form.dto';
@@ -31,7 +32,9 @@ export class FormController {
   @ApiOperation({ summary: 'Get form by ID' })
   @ApiResponse({ status: 200, description: 'Form found', type: FormEntity })
   @ApiResponse({ status: 404, description: 'Form not found' })
-  async findOne(@Param('id') id: string): Promise<FormEntity | null> {
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<FormEntity | null> {
     return this.formService.findOne(Number(id));
   }
 
@@ -46,7 +49,7 @@ export class FormController {
   @ApiOperation({ summary: 'Update a form' })
   @ApiResponse({ status: 200, description: 'Form updated', type: FormEntity })
   async update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateFormDto: UpdateFormDto,
   ): Promise<FormEntity> {
     return this.formService.update(Number(id), updateFormDto);
@@ -55,7 +58,7 @@ export class FormController {
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a form' })
   @ApiResponse({ status: 200, description: 'Form deleted' })
-  async delete(@Param('id') id: string): Promise<FormEntity> {
+  async delete(@Param('id', ParseIntPipe) id: number): Promise<FormEntity> {
     return this.formService.delete(Number(id));
   }
 }

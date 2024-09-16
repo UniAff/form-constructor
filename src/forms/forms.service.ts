@@ -9,14 +9,14 @@ export class FormService {
 
   async findAll(): Promise<Form[]> {
     return this.prisma.form.findMany({
-      include: { offer: true, geo: true },
+      include: { offer: true },
     });
   }
 
   async findOne(id: number): Promise<Form | null> {
     return this.prisma.form.findUnique({
       where: { id },
-      include: { offer: true, geo: true },
+      include: { offer: true },
     });
   }
 
@@ -24,16 +24,9 @@ export class FormService {
     return this.prisma.form.create({
       data: {
         name: data.name,
-        photo: data.photo,
-        currency: data.currency,
-        price: data.price,
-        discount: data.discount,
         template: data.template,
         offer: {
           connect: { id: data.offerId },
-        },
-        geo: {
-          connect: { id: data.geoId },
         },
       },
     });
@@ -42,19 +35,11 @@ export class FormService {
   async update(id: number, data: UpdateFormDto): Promise<Form> {
     const updateData: Prisma.FormUpdateInput = {
       name: data.name,
-      photo: data.photo,
-      currency: data.currency,
-      price: data.price,
-      discount: data.discount,
       template: data.template,
     };
 
     if (data.offerId) {
       updateData.offer = { connect: { id: data.offerId } };
-    }
-
-    if (data.geoId) {
-      updateData.geo = { connect: { id: data.geoId } };
     }
 
     return this.prisma.form.update({

@@ -8,6 +8,7 @@ import {
   Delete,
   UsePipes,
   ValidationPipe,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { GeoService } from './geo.service';
 import { CreateGeoDto, UpdateGeoDto, GeoEntity } from './dto/geo.dto';
@@ -37,7 +38,7 @@ export class GeoController {
     type: GeoEntity,
   })
   @ApiResponse({ status: 404, description: 'Geo entity not found' })
-  async findOne(@Param('id') id: number): Promise<GeoEntity> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<GeoEntity> {
     return this.geoService.findOne(id);
   }
 
@@ -62,7 +63,7 @@ export class GeoController {
   })
   @UsePipes(new ValidationPipe({ transform: true }))
   async update(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateGeoDto: UpdateGeoDto,
   ): Promise<GeoEntity> {
     return this.geoService.update(id, updateGeoDto);
@@ -71,7 +72,7 @@ export class GeoController {
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a Geo entity' })
   @ApiResponse({ status: 200, description: 'Geo entity deleted' })
-  async delete(@Param('id') id: number): Promise<GeoEntity> {
+  async delete(@Param('id', ParseIntPipe) id: number): Promise<GeoEntity> {
     return this.geoService.delete(id);
   }
 }

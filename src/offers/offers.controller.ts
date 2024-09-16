@@ -8,6 +8,7 @@ import {
   Delete,
   UsePipes,
   ValidationPipe,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { OfferService } from './offers.service';
 import { CreateOfferDto, UpdateOfferDto, OfferEntity } from './dto/offer.dto';
@@ -33,7 +34,7 @@ export class OfferController {
   @ApiOperation({ summary: 'Get Offer by ID' })
   @ApiResponse({ status: 200, description: 'Offer found', type: OfferEntity })
   @ApiResponse({ status: 404, description: 'Offer not found' })
-  async findOne(@Param('id') id: number): Promise<OfferEntity> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<OfferEntity> {
     return this.offerService.findOne(id);
   }
 
@@ -50,7 +51,7 @@ export class OfferController {
   @ApiResponse({ status: 200, description: 'Offer updated', type: OfferEntity })
   @UsePipes(new ValidationPipe({ transform: true }))
   async update(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateOfferDto: UpdateOfferDto,
   ): Promise<OfferEntity> {
     return this.offerService.update(id, updateOfferDto);
@@ -59,7 +60,7 @@ export class OfferController {
   @Delete(':id')
   @ApiOperation({ summary: 'Delete an Offer' })
   @ApiResponse({ status: 200, description: 'Offer deleted' })
-  async delete(@Param('id') id: number): Promise<OfferEntity> {
+  async delete(@Param('id', ParseIntPipe) id: number): Promise<OfferEntity> {
     return this.offerService.delete(id);
   }
 }
