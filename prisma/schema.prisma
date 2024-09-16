@@ -30,8 +30,6 @@ model Form {
   template  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Geo       Geo?     @relation(fields: [geoId], references: [id])
-  geoId     Int?
 }
 
 model Geo {
@@ -44,5 +42,4 @@ model Geo {
   updatedAt DateTime @updatedAt
 
   offers Offer[]
-  forms  Form[]
 }
