@@ -11,7 +11,7 @@ model Offer {
   id              Int      @id @default(autoincrement())
   name            String
   geoId           Int
-  geo             Geo      @relation(fields: [geoId], references: [id])
+  geo             Geo      @relation(fields: [geoId], references: [id], onDelete: Cascade)
   price           String
   discount        String
   previewImageUrl String
@@ -25,7 +25,7 @@ model Offer {
 model Form {
   id        Int      @id @default(autoincrement())
   offerId   Int
-  offer     Offer    @relation(fields: [offerId], references: [id])
+  offer     Offer    @relation(fields: [offerId], references: [id], onDelete: Cascade)
   name      String
   template  String
   createdAt DateTime @default(now())
