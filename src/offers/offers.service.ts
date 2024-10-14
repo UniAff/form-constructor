@@ -21,9 +21,22 @@ export class OfferService {
   }
 
   async create(data: CreateOfferDto): Promise<Offer> {
-    return this.prisma.offer.create({
-      data,
+    const offer = await this.prisma.offer.create({
+      data: {
+        ...data,
+        link: '',
+      },
     });
+
+    const host = process.env.host;
+    const updatedOffer = await this.prisma.offer.update({
+      where: { id: offer.id },
+      data: {
+        link: `${host}/offers/${offer.id}`,
+      },
+    });
+
+    return updatedOffer;
   }
 
   async update(id: number, data: UpdateOfferDto): Promise<Offer> {

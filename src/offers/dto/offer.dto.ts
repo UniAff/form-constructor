@@ -27,10 +27,15 @@ export class CreateOfferDto {
   @IsNotEmpty()
   previewImageUrl: string;
 
-  @ApiProperty({ description: 'Link to the Offer' })
+  @ApiProperty({ description: 'Button description for the Offer' })
   @IsString()
   @IsNotEmpty()
-  link: string;
+  buttonDescription: string;
+
+  @ApiProperty({ description: 'Description of the Offer' })
+  @IsString()
+  @IsNotEmpty()
+  description: string;
 }
 
 export class UpdateOfferDto {
